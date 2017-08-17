@@ -1,0 +1,37 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: user
+ * Date: 17.08.2017
+ * Time: 20:59
+ */
+namespace App\Http\Controllers;
+
+use App\Post;
+use Illuminate\Http\Request;
+
+
+class PostController extends Controller
+{
+    public function getDashboard()
+    {
+
+        $posts = Post::all();
+        return view('dashboard',['posts' => $posts] );
+    }
+
+    public function postCreatePost(Request $request)
+    {
+        $this->validate($request,[
+            'body' => 'required|max:1000'
+        ]);
+        $post = new Post();
+        $post->body = $request['body'];
+        $message = 'There was an error';
+
+        if($request->user()->posts()->save($post)){
+            $message = 'Post created successfully!';
+        }
+        return redirect()->route('dashboard')->with(['message' => $message]);
+    }
+}
