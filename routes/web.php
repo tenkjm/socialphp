@@ -29,6 +29,11 @@ Route::group(['middleware' => ['web']], function (){
         'as' => 'signin'
     ]);
 
+    Route::get('/logout', [
+        'uses' => 'UserController@getLogout',
+        'as' => 'signup'
+    ]);
+
     Route::get('/dashboard', [
         'uses' => 'PostController@getDashboard',
         'as' => 'dashboard',
@@ -37,8 +42,14 @@ Route::group(['middleware' => ['web']], function (){
 
     Route::post('/createpost', [
        'uses' => 'PostController@postCreatePost',
-       'as' => 'post.create'
+       'as' => 'post.create',
+        'middleware' => 'auth'
 
+    ]);
+    Route::get('/delete-post/{post_id}',[
+        'uses' => 'PostController@getDeletePost',
+        'as' => 'post.delete',
+        'middleware' => 'auth'
     ]);
 });
 Auth::routes();
