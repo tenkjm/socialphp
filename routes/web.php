@@ -13,18 +13,18 @@
 
 
 
-Route::group(['middleware' => ['web']], function (){
+Route::group(['middleware' => ['web']], function () {
 
     Route::get('/', function () {
         return view('welcome');
     })->name('home');
 
-    Route::post('/signup',[
-       'uses' => 'UserController@postSignUp',
+    Route::post('/signup', [
+        'uses' => 'UserController@postSignUp',
         'as' => 'signup'
     ]);
 
-    Route::post('/signin',[
+    Route::post('/signin', [
         'uses' => 'UserController@postSignIn',
         'as' => 'signin'
     ]);
@@ -41,16 +41,26 @@ Route::group(['middleware' => ['web']], function (){
     ]);
 
     Route::post('/createpost', [
-       'uses' => 'PostController@postCreatePost',
-       'as' => 'post.create',
+        'uses' => 'PostController@postCreatePost',
+        'as' => 'post.create',
         'middleware' => 'auth'
 
     ]);
-    Route::get('/delete-post/{post_id}',[
+    Route::get('/delete-post/{post_id}', [
         'uses' => 'PostController@getDeletePost',
         'as' => 'post.delete',
         'middleware' => 'auth'
     ]);
+    Route::post('/edit',/* function (\Illuminate\Http\Request $request){
+        return response()->json(['message'=>$request['body']]);
+    })->name('edit');
+*/
+        [
+            'uses' => 'PostController@postEditPost',
+            'as' => 'edit',
+            'middleware' => 'auth'
+        ]);
+
 });
 Auth::routes();
 
