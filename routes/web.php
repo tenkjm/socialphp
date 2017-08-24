@@ -74,7 +74,12 @@ Route::group(['middleware' => ['web']], function () {
             'as' => 'edit',
             'middleware' => 'auth'
         ]);
+    Route::post('/like', [
+        'uses' => 'PostController@postLikePost',
+        'as' => 'like',
+        'middleware' => 'auth'
 
+    ]);
 });
 Auth::routes();
 

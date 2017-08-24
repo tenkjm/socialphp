@@ -22,6 +22,8 @@ class CreateLikesTable extends Migration
         });
     }
 
+
+
     /**
      * Reverse the migrations.
      *
